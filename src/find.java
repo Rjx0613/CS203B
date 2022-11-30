@@ -7,6 +7,19 @@ public class find {
     ArrayList<Point> open = new ArrayList<>();
     ArrayList<Point> close = new ArrayList<>();
 
+    public find(int[][] in){
+        int i=0,j=0;
+        for(;i<in.length;i++){
+            for(;j<in[0].length;j++){
+                if(in[i][j]==0){
+                    break;
+                }
+            }
+        }
+        Point initialPoint=new Point(i,j,in);
+        open.add(initialPoint);
+    }
+
     public int[][] finalState(int[][] in) {
         int row = in.length;
         int col = in[0].length;

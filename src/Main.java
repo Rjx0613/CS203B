@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class Main {
     public static void main(String[] args) {
-        find find=new find();
+
         int row= StdIn.readInt();
         int col=StdIn.readInt();
         int[][] inputBoard=new int[row][col];
@@ -12,6 +12,7 @@ public class Main {
                 inputBoard[i][j]= StdIn.readInt();
             }
         }
+        find find=new find(inputBoard);
         int[][] result= find.finalState(inputBoard);
 
         while(find.open.size()!=0){
