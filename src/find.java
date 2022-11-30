@@ -13,6 +13,7 @@ public class find {
             for(;j<in[0].length;j++){
                 if(in[i][j]==0){
                     break;
+
                 }
             }
         }
