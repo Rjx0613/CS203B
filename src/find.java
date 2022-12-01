@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.AVLTreeST;
 import edu.princeton.cs.algs4.Quick;
 
 import java.util.ArrayList;
@@ -8,17 +9,7 @@ public class find {
     ArrayList<Point> close = new ArrayList<>();
 
     public find(int[][] in){
-        int i=0,j=0;
-        for(;i<in.length;i++){
-            for(;j<in[0].length;j++){
-                if(in[i][j]==0){
-                    break;
-
-                }
-            }
-        }
-        Point initialPoint=new Point(i,j,in);
-        open.add(initialPoint);
+        initialOClist(in);
     }
 
     public int[][] finalState(int[][] in) {
@@ -56,7 +47,8 @@ public class find {
         for (int i = 0; i < in.length; i++) {
             for (int j = 0; j < in[0].length; j++) {
                 if (in[i][j] == 0) {
-                    open.add(new Point(i, j, in));
+                    Point point=new Point(i,j,in);
+                    open.add(point);
                 }
             }
         }
@@ -70,10 +62,10 @@ public class find {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 int sourcePoint = board[i][j];
-                if (board[i][j] !=0 && sourcePoint != i * col + j + 1) {
+                if (sourcePoint !=0 && sourcePoint != i * col + j + 1) {
                     int targetRow = (sourcePoint - 1) / col;
                     int targetCol = (sourcePoint - 1) % col;
-                    Hn += Math.abs(i - targetRow) + Math.abs(i - targetCol);
+                    Hn += Math.abs(i - targetRow) + Math.abs(j - targetCol);
                 }
             }
         }
@@ -120,8 +112,8 @@ public class find {
         newBoard[fatherPoint.getRow()][fatherPoint.getCol()] = tmp;
         newPoint.setBoard(newBoard);
         newPoint.setFather(fatherPoint);
-        newPoint.setG(fatherPoint.getG() + 1);
         newPoint.setF(measureF(newPoint));
+        newPoint.setG(newPoint.getG() + 1);
         if (isInList(close, newPoint)) {//若在close表中则代表该点不用考虑
             return;
         }
@@ -144,6 +136,16 @@ public class find {
         }
         if (point.getCol() < col - 1) {//right
             addPoint(point, point.getRow(), point.getCol() + 1);
+        }
+    }
+
+    public void printBoard(int[][] in){
+        for (int i = 0; i < in.length; i++) {
+            for (int j = 0; j < in[0].length; j++) {
+                System.out.printf("%-6d", in[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
         }
     }
 

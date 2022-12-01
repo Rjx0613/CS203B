@@ -1,4 +1,4 @@
-public class Point {
+public class Point implements Comparable<Point> {
     private int col, row;
     private int[][] board;
     private int F, G;
@@ -62,5 +62,10 @@ public class Point {
 
     public void setFather(Point father) {
         this.father = father;
+    }
+
+    @Override
+    public int compareTo(Point o) {
+        return this.F - o.F;
     }
 }
