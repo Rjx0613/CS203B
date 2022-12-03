@@ -1,13 +1,15 @@
+import edu.princeton.cs.algs4.StdOut;
+
 public class block {
     private int data;
     private boolean isBlock;
     private double type;//1*1==0;1*2==1;2*1==2;2*2==3
     block mainPoint;
 
-    public block(int data,float type){
-        this.data=data;
-        this.type=type;
-        if(!isBlock()){
+    public block(int data, float type) {
+        this.data = data;
+        this.type = type;
+        if (!isBlock()) {
             this.setMainPoint(this);
         }
     }
@@ -33,7 +35,11 @@ public class block {
     }
 
     public void setType(double type) {
-        this.type = type;
+        if (getType() == 0) {
+            this.type = type;
+        }else{
+            throw new IllegalArgumentException("block cross!");
+        }
     }
 
     public block getMainPoint() {

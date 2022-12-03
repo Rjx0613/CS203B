@@ -1,9 +1,11 @@
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdIn;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class Main {
+    ArrayList<Point> solute=new ArrayList<>();
     public static void main(String[] args) {
         int row = StdIn.readInt();
         int col = StdIn.readInt();
@@ -69,28 +71,29 @@ public class Main {
                 int step=1;
                 int[][] board= find.toInt(stack.pop().getBoard());
                 while(!stack.isEmpty()){
-                    block[][] boardNew= stack.pop().getBoard();
+                    Point pointNew=stack.pop();
+                    block[][] boardNew= pointNew.getBoard();
                     if(!find.isSameBoard(boardNew,board)){
                         System.out.println("step:"+step);
                         step++;
+                        System.out.println(pointNew.getAction());
                         find.printBoard(find.toInt(boardNew));
+//                    find.printBoard(find.toInt(stack.pop().getBoard()));
                         board=find.toInt(boardNew);
                     }
-
                 }
                 return;
             }else{
                 find.close.add(topPoint);
                 find.open.remove(0);
                 find.renew(topPoint);
-//                System.out.println(i++);
-//                find.printBoard(find.toInt(topPoint.getBoard()));
+                System.out.println(i++);
+                find.printBoard(find.toInt(topPoint.getBoard()));
             }
         }
 //        Point topPoint=find.open.get(0);
 //        find.renewOpenList(topPoint);
 //        Collections.sort(find.open);
-//
 //        System.out.println("000");
     }
 }

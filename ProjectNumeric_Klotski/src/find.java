@@ -8,8 +8,8 @@ public class find {
 
     public find(block[][] in) {
         initialOClist(in);
-        int initialSize= open.size();
-        for (int i = 0; i <initialSize; i++) {
+        int initialSize = open.size();
+        for (int i = 0; i < initialSize; i++) {
             renewOpenList(open.get(i));
         }
     }
@@ -48,7 +48,7 @@ public class find {
     public void initialOClist(block[][] in) {
         for (int i = 0; i < in.length; i++) {
             for (int j = 0; j < in[0].length; j++) {
-                if (in[i][j].getData() == 0) {//将棋盘中的零加入openlist
+                if (in[i][j].getData() == 0) {//将棋盘中的零加入openList
                     Point point = new Point(i, j, in);
                     open.add(point);
                 }
@@ -131,6 +131,15 @@ public class find {
         newPoint.setParent(parent);
         newPoint.setF(measureF(newPoint));
         newPoint.setG(newPoint.getG() + 1);
+        if(parent.getRow()==row&&parent.getCol()-col==1){
+            newPoint.setAction(String.format("%d R",tmp.getMainPoint().getData()));
+        }else if(parent.getRow()-row==1&&parent.getCol()==col){
+            newPoint.setAction(String.format("%d D",tmp.getMainPoint().getData()));
+        }else if(parent.getRow()==row&&parent.getCol()-col==-1){
+            newPoint.setAction(String.format("%d L",tmp.getMainPoint().getData()));
+        }else if(parent.getRow()-row==-1&&parent.getCol()==col){
+            newPoint.setAction(String.format("%d U",tmp.getMainPoint().getData()));
+        }
         if (isInList(close, newPoint)) {//若在close表中则代表该点不用考虑
             return;
         }
@@ -188,6 +197,7 @@ public class find {
                         newBoard[sourceRow][sourceCol + 1] = newBoard[sourceRow - 1][sourceCol + 1];
                         newBoard[sourceRow - 1][sourceCol] = tmp1;
                         newBoard[sourceRow - 1][sourceCol + 1] = tmp2;
+                        newPoint1.setAction(String.format("%d D",up.getMainPoint().getData()));
                     }
                 } else if (type == 1.2) {
                     if (board[sourceRow][sourceCol - 1].getData() == 0) {
@@ -199,6 +209,7 @@ public class find {
                         newBoard[sourceRow][sourceCol - 1] = newBoard[sourceRow - 1][sourceCol - 1];
                         newBoard[sourceRow - 1][sourceCol] = tmp1;
                         newBoard[sourceRow - 1][sourceCol - 1] = tmp2;
+                        newPoint1.setAction(String.format("%d D",up.getMainPoint().getData()));
                     }
                 }
             } else if (type == 2.2) {//2*1
@@ -208,6 +219,7 @@ public class find {
                 newBoard[sourceRow][sourceCol] = newBoard[sourceRow - 1][sourceCol];
                 newBoard[sourceRow - 1][sourceCol] = newBoard[sourceRow - 2][sourceCol];
                 newBoard[sourceRow - 2][sourceCol] = tmp1;
+                newPoint1.setAction(String.format("%d D",up.getMainPoint().getData()));
             } else if ((int) type == 3) {
                 if (type == 3.3) {
                     if (board[sourceRow][sourceCol + 1].getData() == 0) {
@@ -221,6 +233,7 @@ public class find {
                         newBoard[sourceRow - 1][sourceCol + 1] = newBoard[sourceRow - 2][sourceCol + 1];
                         newBoard[sourceRow - 2][sourceCol] = tmp1;
                         newBoard[sourceRow - 2][sourceCol + 1] = tmp2;
+                        newPoint1.setAction(String.format("%d D",up.getMainPoint().getData()));
                     }
                 } else if (type == 3.4) {
                     if (board[sourceRow][sourceCol - 1].getData() == 0) {
@@ -234,6 +247,7 @@ public class find {
                         newBoard[sourceRow - 1][sourceCol - 1] = newBoard[sourceRow - 2][sourceCol - 1];
                         newBoard[sourceRow - 2][sourceCol] = tmp1;
                         newBoard[sourceRow - 2][sourceCol - 1] = tmp2;
+                        newPoint1.setAction(String.format("%d D",up.getMainPoint().getData()));
                     }
                 }
             }
@@ -260,6 +274,7 @@ public class find {
                         newBoard[sourceRow][sourceCol + 1] = newBoard[sourceRow + 1][sourceCol + 1];
                         newBoard[sourceRow + 1][sourceCol] = tmp1;
                         newBoard[sourceRow + 1][sourceCol + 1] = tmp2;
+                        newPoint2.setAction(String.format("%d U",down.getMainPoint().getData()));
                     }
                 } else if (type == 1.2) {
                     if (board[sourceRow][sourceCol - 1].getData() == 0) {
@@ -271,6 +286,7 @@ public class find {
                         newBoard[sourceRow][sourceCol - 1] = newBoard[sourceRow + 1][sourceCol - 1];
                         newBoard[sourceRow + 1][sourceCol] = tmp1;
                         newBoard[sourceRow + 1][sourceCol - 1] = tmp2;
+                        newPoint2.setAction(String.format("%d U",down.getMainPoint().getData()));
                     }
                 }
             } else if (type == 2.1) {//2*1
@@ -280,6 +296,7 @@ public class find {
                 newBoard[sourceRow][sourceCol] = newBoard[sourceRow + 1][sourceCol];
                 newBoard[sourceRow + 1][sourceCol] = newBoard[sourceRow + 2][sourceCol];
                 newBoard[sourceRow + 2][sourceCol] = tmp1;
+                newPoint2.setAction(String.format("%d U",down.getMainPoint().getData()));
             } else if ((int) type == 3) {
                 if (type == 3.1) {
                     if (board[sourceRow][sourceCol + 1].getData() == 0) {
@@ -293,6 +310,7 @@ public class find {
                         newBoard[sourceRow + 1][sourceCol + 1] = newBoard[sourceRow + 2][sourceCol + 1];
                         newBoard[sourceRow + 2][sourceCol] = tmp1;
                         newBoard[sourceRow + 2][sourceCol + 1] = tmp2;
+                        newPoint2.setAction(String.format("%d U",down.getMainPoint().getData()));
                     }
                 } else if (type == 3.2) {
                     if (board[sourceRow][sourceCol - 1].getData() == 0) {
@@ -306,6 +324,7 @@ public class find {
                         newBoard[sourceRow + 1][sourceCol - 1] = newBoard[sourceRow + 2][sourceCol - 1];
                         newBoard[sourceRow + 2][sourceCol] = tmp1;
                         newBoard[sourceRow + 2][sourceCol - 1] = tmp2;
+                        newPoint2.setAction(String.format("%d U",down.getMainPoint().getData()));
                     }
                 }
             }
@@ -328,6 +347,7 @@ public class find {
                 newBoard[sourceRow][sourceCol] = newBoard[sourceRow][sourceCol - 1];
                 newBoard[sourceRow][sourceCol - 1] = newBoard[sourceRow][sourceCol - 2];
                 newBoard[sourceRow][sourceCol - 2] = tmp1;
+                newPoint3.setAction(String.format("%d R",left.getMainPoint().getData()));
             } else if ((int) type == 2) {//2*1
                 if (type == 2.1) {
                     if (board[sourceRow + 1][sourceCol].getData() == 0) {
@@ -339,6 +359,7 @@ public class find {
                         newBoard[sourceRow + 1][sourceCol] = newBoard[sourceRow + 1][sourceCol - 1];
                         newBoard[sourceRow][sourceCol - 1] = tmp1;
                         newBoard[sourceRow + 1][sourceCol - 1] = tmp2;
+                        newPoint3.setAction(String.format("%d R",left.getMainPoint().getData()));
                     }
                 } else if (type == 2.2) {
                     if (board[sourceRow - 1][sourceCol].getData() == 0) {
@@ -350,6 +371,7 @@ public class find {
                         newBoard[sourceRow - 1][sourceCol] = newBoard[sourceRow - 1][sourceCol - 1];
                         newBoard[sourceRow][sourceCol - 1] = tmp1;
                         newBoard[sourceRow - 1][sourceCol - 1] = tmp2;
+                        newPoint3.setAction(String.format("%d R",left.getMainPoint().getData()));
                     }
                 }
             } else if ((int) type == 3) {
@@ -365,6 +387,7 @@ public class find {
                         newBoard[sourceRow + 1][sourceCol - 1] = newBoard[sourceRow + 1][sourceCol - 2];
                         newBoard[sourceRow][sourceCol - 2] = tmp1;
                         newBoard[sourceRow + 1][sourceCol - 2] = tmp2;
+                        newPoint3.setAction(String.format("%d R",left.getMainPoint().getData()));
                     }
                 } else if (type == 3.4) {
                     if (board[sourceRow - 1][sourceCol].getData() == 0) {
@@ -378,6 +401,7 @@ public class find {
                         newBoard[sourceRow - 1][sourceCol - 1] = newBoard[sourceRow - 1][sourceCol - 2];
                         newBoard[sourceRow][sourceCol - 2] = tmp1;
                         newBoard[sourceRow - 1][sourceCol - 2] = tmp2;
+                        newPoint3.setAction(String.format("%d R",left.getMainPoint().getData()));
                     }
                 }
             }
@@ -400,9 +424,10 @@ public class find {
                 newBoard[sourceRow][sourceCol] = newBoard[sourceRow][sourceCol + 1];
                 newBoard[sourceRow][sourceCol + 1] = newBoard[sourceRow][sourceCol + 2];
                 newBoard[sourceRow][sourceCol + 2] = tmp1;
+                newPoint4.setAction(String.format("%d L",right.getMainPoint().getData()));
             } else if ((int) type == 2) {//2*1
                 if (type == 2.1) {
-                    if (board[sourceRow +1][sourceCol].getData() == 0) {
+                    if (board[sourceRow + 1][sourceCol].getData() == 0) {
                         newPoint4 = new Point(sourceRow, sourceCol + 1);
                         block tmp1 = newBoard[sourceRow][sourceCol];
                         block tmp2 = newBoard[sourceRow + 1][sourceCol];//记录目标点的数
@@ -411,6 +436,7 @@ public class find {
                         newBoard[sourceRow + 1][sourceCol] = newBoard[sourceRow + 1][sourceCol + 1];
                         newBoard[sourceRow][sourceCol + 1] = tmp1;
                         newBoard[sourceRow + 1][sourceCol + 1] = tmp2;
+                        newPoint4.setAction(String.format("%d L",right.getMainPoint().getData()));
                     }
                 } else if (type == 2.2) {
                     if (board[sourceRow - 1][sourceCol].getData() == 0) {
@@ -422,12 +448,13 @@ public class find {
                         newBoard[sourceRow - 1][sourceCol] = newBoard[sourceRow - 1][sourceCol + 1];
                         newBoard[sourceRow][sourceCol + 1] = tmp1;
                         newBoard[sourceRow - 1][sourceCol + 1] = tmp2;
+                        newPoint4.setAction(String.format("%d L",right.getMainPoint().getData()));
                     }
                 }
             } else if ((int) type == 3) {
                 if (type == 3.1) {
                     if (board[sourceRow + 1][sourceCol].getData() == 0) {
-                        newPoint4 = new Point(sourceRow, sourceCol+ 2);
+                        newPoint4 = new Point(sourceRow, sourceCol + 2);
                         block tmp1 = newBoard[sourceRow][sourceCol];
                         block tmp2 = newBoard[sourceRow + 1][sourceCol];//记录目标点的数
 
@@ -437,6 +464,7 @@ public class find {
                         newBoard[sourceRow + 1][sourceCol + 1] = newBoard[sourceRow + 1][sourceCol + 2];
                         newBoard[sourceRow][sourceCol + 2] = tmp1;
                         newBoard[sourceRow + 1][sourceCol + 2] = tmp2;
+                        newPoint4.setAction(String.format("%d L",right.getMainPoint().getData()));
                     }
                 } else if (type == 3.3) {
                     if (board[sourceRow - 1][sourceCol].getData() == 0) {
@@ -450,6 +478,7 @@ public class find {
                         newBoard[sourceRow - 1][sourceCol + 1] = newBoard[sourceRow - 1][sourceCol + 2];
                         newBoard[sourceRow][sourceCol + 2] = tmp1;
                         newBoard[sourceRow - 1][sourceCol + 2] = tmp2;
+                        newPoint4.setAction(String.format("%d L",right.getMainPoint().getData()));
                     }
                 }
             }
@@ -461,12 +490,12 @@ public class find {
         }
     }
 
-    public void renew(Point point){
-        block[][] board= point.getBoard();
-        for(int i=0;i<board.length;i++){
-            for(int j=0;j< board[0].length;j++){
-                if(board[i][j].getData()==0){
-                    Point newPoint=new Point(i,j,board);
+    public void renew(Point point) {
+        block[][] board = point.getBoard();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j].getData() == 0) {
+                    Point newPoint = new Point(i, j, board);
                     newPoint.setParent(point);
                     renewOpenList(newPoint);
                 }

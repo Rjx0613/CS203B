@@ -2,6 +2,7 @@ public class Point implements Comparable<Point> {
     private int col, row;
     private block[][] board;
     private int F, G;
+    private String action;
 
     Point parent;
 
@@ -62,6 +63,14 @@ public class Point implements Comparable<Point> {
 
     public void setParent(Point parent) {
         this.parent = parent;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @Override
