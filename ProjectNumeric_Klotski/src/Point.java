@@ -1,16 +1,16 @@
-public class Point {
+public class Point implements Comparable<Point> {
     private int col, row;
-    private int[][] board;
+    private block[][] board;
     private int F, G;
 
-    Point father;
+    Point parent;
 
     public Point(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
-    public Point(int row, int col, int[][] board) {
+    public Point(int row, int col, block[][] board) {
         this.row = row;
         this.col = col;
         this.board = board;
@@ -32,11 +32,11 @@ public class Point {
         this.row = row;
     }
 
-    public int[][] getBoard() {
+    public block[][] getBoard() {
         return board;
     }
 
-    public void setBoard(int[][] board) {
+    public void setBoard(block[][] board) {
         this.board = board;
     }
 
@@ -56,11 +56,16 @@ public class Point {
         G = g;
     }
 
-    public Point getFather() {
-        return father;
+    public Point getParent() {
+        return parent;
     }
 
-    public void setFather(Point father) {
-        this.father = father;
+    public void setParent(Point parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public int compareTo(Point o) {
+        return this.F - o.F;
     }
 }
